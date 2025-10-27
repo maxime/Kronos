@@ -30,6 +30,9 @@ class SequentialTrainer:
         if self.config.use_cuda and torch.cuda.is_available():
             torch.cuda.set_device(self.local_rank)
             device = torch.device(f"cuda:{self.local_rank}")
+        elif torch.backends.mps.is_available():
+            # Apple Silicon GPU support
+            device = torch.device("mps")
         else:
             device = torch.device("cpu")
         
